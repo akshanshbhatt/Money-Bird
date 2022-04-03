@@ -100,3 +100,22 @@ Follow these steps to run the Money Bird app on your local machine:
     ```
 
     You can now go to http://localhost:5000/ to see the app in action.
+
+## Contributing
+
+In order to submit a patch:
+
+1. Fork the repository on GitHub. This will create a new repository on GitHub under your account with the same name as the original repository.
+
+1. If you have already cloned the repository (following the steps mentioned above), you don't need to clone it again. Just make sure that your `origin` remote URL is set to the newly forked one and `upstream` is set to this repo's original URL. On running `git remote -v` you should see the following:
+
+    ```
+    origin	https://github.com/{YOUR_GH_USERNAME}/Money-Bird.git (fetch)
+    origin	https://github.com/{YOUR_GH_USERNAME}/Money-Bird.git (push)
+    upstream	https://github.com/akshanshbhatt/Money-Bird.git (fetch)
+    upstream	https://github.com/akshanshbhatt/Money-Bird.git (push)
+    ```
+
+1. Make sure to fetch the upstream repository before making any changes. Use `git fetch upstream` to fetch the latest changes from the upstream repository. You can also use `git pull upstream` to do the same. You can also use `git merge upstream/master` to merge the latest changes from the upstream repository.
+
+1. Commit the changes to the forked repository. You can then visit your forked repo URL on GitHub and see the changes and make a pull request.
