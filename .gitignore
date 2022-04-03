@@ -152,7 +152,7 @@ cython_debug/
 #.idea/
 
 # API  Confidentiality
-config.py
+# config.py
 
 # Venv
 moneybird-env/
