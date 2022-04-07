@@ -4,28 +4,20 @@ import requests
 import json
 import re
 from .sentiment import sentiment_score
-
-ALPHA_VANTAGE_API_KEY = 'QK435OE020SU1TTR'
-COIN_API_KEY = '26CF8175-1B85-4319-9C16-D5AADD50932E'
-
-TWITTER_API_KEY = 'QWq26qOLj7sonhlKs3ORZKa7U'
-TWITTER_API_SECRET = '1E4V64EPkX6BXZX3ZXzvIdaCP7v4EuPWMyWOUFCTo3SW9EFzqL'
-TWITTER_BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAKKmbAEAAAAAfbIdTcldWHkq0DWgmytLt4r3pgk%3DyjaDeWtcUNgSZKY1mddJBwzJDC1WraRfE8LpZmZIEswwXwr5E0'
-TWITTER_ACESS_TOKEN = '4641622393-P3b9aZIE9gPY6IFG5MICKJ964IW0umaSeG9KNIw'
-TWITTER_ACESS_TOKEN_SECRET = 'NkHsIAb79F8melspjopiO5djYO3h8JqwwG7DoGx3jIZVJ'
-
-TWITTER_CLIENT_ID = 'elE2TTg3WkRwOU5QYVZtM3JtTkU6MTpjaQ'
-TWITTER_CLIENT_SECRET = 'qm05BcFtEaOkDz-FIQPBmJeiW7wGhRUqVp1RoiS0Naa0BWDoqW'
+from .config import *
 
 
 app = Flask(__name__)
 
 
+# Primary root of the app (entry point)
 @app.route("/")
 def home_view():
     return "<h1>💰 🐦</h1>"
 
 
+# This is the main path which will be called by the frontend.
+# It will return the data in the format required by the frontend.
 @app.route("/stock/<symbol>")
 def stock_view(symbol):
     master_dictionary = {}
@@ -36,25 +28,25 @@ def stock_view(symbol):
     return master_dictionary
 
 
+# Gettting the time series data from Alpha Vantage API
 def time_series_data(symbol):
     ts = TimeSeries(key=ALPHA_VANTAGE_API_KEY)
     data, meta_data = ts.get_daily(symbol=symbol)
     return data
 
 
+# This function will return the company overview for the given symbol.
+# This contains essential information required by the users to understand a company.
 def company_overview(symbol):
     url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={ALPHA_VANTAGE_API_KEY}'
     r = requests.get(url)
     return r.json()
 
 
+# Using the twitter api to get the recent tweets for the given symbol.
 def recent_tweets(symbol, company):
 
-    poi = person_of_interest(symbol)
-    if poi == "":
-        url = f"https://api.twitter.com/2/tweets/search/recent?max_results=25&query=({symbol} OR \"{company}\" OR \"{company} is\" OR \"{company} was\" OR \"{company} will\") lang:en -is:retweet -is:reply -is:quote -has:links&sort_order=relevancy"
-    else:
-        url = f"https://api.twitter.com/2/tweets/search/recent?max_results=25&query=({symbol} OR {poi} OR \"{company}\" OR \"{company} is\" OR \"{company} was\" OR \"{company} will\") lang:en -is:retweet -is:reply -is:quote -has:links&sort_order=relevancy"
+    url = f"https://api.twitter.com/2/tweets/search/recent?max_results=25&query=({symbol} OR {poi} OR \"{company}\" OR \"{company} is\" OR \"{company} was\" OR \"{company} will\") lang:en -is:retweet -is:reply -is:quote -has:links&sort_order=relevancy"
     payload = {}
     headers = {
         'Authorization': f'Bearer {TWITTER_BEARER_TOKEN}',
@@ -77,27 +69,8 @@ def recent_tweets(symbol, company):
     return api_dict
 
 
-def person_of_interest(symbol):
-    poi = ""
-    if symbol == 'AAPL':
-        poi = '''"Tim Cook"'''
-    elif symbol == 'GOOGL':
-        poi = '''"Sundar Pichai'''
-    elif symbol == 'MSFT':
-        poi = '''"Satya Nadella"'''
-    elif symbol == 'AMZN':
-        poi = '''"Jeff Bezos" OR "Andy Jassy"'''
-    elif symbol == 'FB':
-        poi = '''"Mark Zuckerberg"'''
-    elif symbol == 'TWTR':
-        poi = '''"Jack Dorsey" OR "Parag Agarwal"'''
-    elif symbol == 'CSCO':
-        poi = '''"Larry Ellison"'''
-    elif symbol == 'TSLA':
-        poi = '''"Elon Musk"'''
-    return poi
-
-
+# Using the dumbstock API to get the company name for the given symbol
+# and also the exchange in which the company is listed.
 def company_name(index):
     try:
         index = index.upper()

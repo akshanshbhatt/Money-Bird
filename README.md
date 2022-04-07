@@ -78,9 +78,9 @@ Follow these steps to run the Money Bird app on your local machine:
     pip install -r requirements.txt
     ```
 
-1. **Creating config file in the root of the repository** **
+1. **Creating config file in the app folder of the repository** **
 
-    Create a file named `config.py` in the root of the repository. This file will contain your API credentials. Your API credentials should remain secret.
+    Create a file named `config.py` in the app folder of the repository. This file will contain your API credentials. Your API credentials should remain secret.
 
     This file is already included in the `.gitignore` file. Therefore you don't have to worry about committing your API credentials when you make any contributions to the repository.
 
