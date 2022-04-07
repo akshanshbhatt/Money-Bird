@@ -10,6 +10,8 @@ Talking about social media and finance, Finance Twitter is a reasonably mature p
 
 After analyzing these potential features of the platform, we decided to make an app that could help a beginner get some insight into the public's mood online before investing; introducing -- Money Bird. Money Bird provides sentiment analysis of the most popular tweets related to a particular company. It also gives a company's average sentiment score (using an AFINN model) based on the most relevant recent tweets. Money Bird is still in the pre-alpha development stage but works satisfactorily well for NASDAQ and NYSE stocks. Feel free to contribute and give your insights on our project.
 
+**Check out our app (Limited frontend):** [App's deployment link](https://money-bird-39e83.web.app/)
+
 ## Local setup
 
 Follow these steps to run the Money Bird app on your local machine:
