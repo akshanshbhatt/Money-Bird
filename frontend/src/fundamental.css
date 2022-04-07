@@ -1,0 +1,35 @@
+.fundamental{
+    display: block;
+    margin-top: 40%;
+}
+
+.fundamental h2{
+    font-size:2rem;
+    font-weight:normal;
+    margin-bottom: 20px;
+}
+
+.fundamental table {
+    border-spacing: 0px 20px;
+    font-size:1.5rem;
+    width: 100%;
+}
+
+.left {
+    color:grey;
+    padding-right: 220px;
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+
+.column2 {
+    padding-left:80px;
+}
+
+.column1 {
+    padding-right:25px;
+    border-right: 1px solid;
+}
